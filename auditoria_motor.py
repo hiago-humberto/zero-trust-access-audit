@@ -56,3 +56,31 @@ def processar_auditoria_desligados(df_desligados, df_acessos):
     ]
     
     return df_falhas[colunas_finais]
+
+def aplicar_regras_transferencias(df_transferidos, df_acessos):
+    # 1. Tratamento e Validação de Schema
+    df_acessos['Matricula_Clean'] = df_acessos['ID'].str.extract('(\d+)').astype(float)
+    df_transferidos['Matrícula'] = df_transferidos['Matrícula'].astype(float)
+
+    # 2. Cruzamento Vetorizado
+    df_cruzamento = pd.merge(
+        df_transferidos, 
+        df_acessos, 
+        left_on='Matrícula', 
+        right_on='Matricula_Clean', 
+        how='inner'
+    )
+
+    # 3. Regra de ITGC: O colaborador transferido ainda tem acesso à área antiga?
+    def checar_risco_sod(row):
+        area_origem = str(row['Área Origem']).strip().upper()
+        modulos_acesso = str(row['Módulo']).upper()
+        status_acesso = str(row['Status']).upper()
+        
+        # Se ele for ativo e a área antiga ainda estiver na string do módulo
+        if status_acesso == 'ATIVO' and area_origem in modulos_acesso:
+            return '🟠 MÉDIO: Acesso mantido na Área de Origem (Falha SoD)'
+        return '🟢 OK: Controle Efetivo'
+
+    df_cruzamento['Classificação de Risco'] = df_cruzamento.apply(checar_risco_sod, axis=1)
+    return df_cruzamento
