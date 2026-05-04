@@ -2,7 +2,7 @@ import streamlit as st
 import time
 import pandas as pd
 import io
-from pipeline.orchestrator import rodar_auditoria, rodar_auditoria_transferencias
+from pipeline.orchestrator import rodar_auditoria, rodar_auditoria_transferencias, rodar_auditoria_fantasmas
 
 st.set_page_config(page_title="Zero Trust Audit Hub", page_icon="🛡️", layout="wide")
 
