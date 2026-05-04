@@ -64,21 +64,37 @@ elif modo_auditoria == "2. Revisão de Acessos (Transferidos)":
 
 elif modo_auditoria == "3. Auditoria Completa (Consolidada)":
     st.subheader("Auditoria Master (ITGC Completo)")
-    st.markdown("Faça o upload de todas as bases para gerar o parecer consolidado.")
+    st.markdown("Faça o upload de todas as bases para gerar o parecer consolidado e caçar Contas Fantasmas.")
     
     arquivo_desligados = st.sidebar.file_uploader("Base de Desligados (TXT)", type=['txt'])
     arquivo_transferidos = st.sidebar.file_uploader("Base de Transferidos (TXT)", type=['txt'])
+    arquivo_ativos = st.sidebar.file_uploader("Base de Ativos (TXT)", type=['txt']) # O 4º Arquivo!
     arquivo_usuarios = st.sidebar.file_uploader("Acessos do Sistema (TXT)", type=['txt'])
 
-    if arquivo_desligados and arquivo_transferidos and arquivo_usuarios:
-        with st.spinner("Processando Motor Zero Trust para todas as identidades..."):
+    if arquivo_desligados and arquivo_transferidos and arquivo_ativos and arquivo_usuarios:
+        with st.spinner("Processando Motor Zero Trust e rastreando contas fantasmas..."):
             inicio = time.time()
             
-            # Roda as duas auditorias simultaneamente
+            # Importa o novo orquestrador
+            from pipeline.orchestrator import rodar_auditoria_fantasmas
+            
+            # REBOBINA OS ARQUIVOS E RODA AUDITORIA 1
+            arquivo_desligados.seek(0)
+            arquivo_usuarios.seek(0)
             df_resultado_desligados = rodar_auditoria(arquivo_desligados, arquivo_usuarios)
+            
+            # REBOBINA E RODA AUDITORIA 2
+            arquivo_transferidos.seek(0)
+            arquivo_usuarios.seek(0)
             df_resultado_transferidos = rodar_auditoria_transferencias(arquivo_transferidos, arquivo_usuarios)
             
-            # Filtra apenas as falhas
+            # REBOBINA E RODA AUDITORIA 3 (A CAÇA AOS FANTASMAS)
+            arquivo_ativos.seek(0)
+            arquivo_desligados.seek(0)
+            arquivo_usuarios.seek(0)
+            df_falhas_fantasmas = rodar_auditoria_fantasmas(arquivo_ativos, arquivo_desligados, arquivo_usuarios)
+            
+            # Filtra apenas as falhas dos dois primeiros (o de fantasmas já traz só as falhas)
             df_falhas_desl = df_resultado_desligados[df_resultado_desligados['Classificação de Risco'] != '🟢 OK: Controle Efetivo']
             df_falhas_transf = df_resultado_transferidos[df_resultado_transferidos['Classificação de Risco'] != '🟢 OK: Controle Efetivo']
             
@@ -86,29 +102,32 @@ elif modo_auditoria == "3. Auditoria Completa (Consolidada)":
 
         st.success(f"✅ Auditoria Master concluída em {tempo_execucao:.3f} segundos.")
         
-        # Resumo Executivo
-        col1, col2 = st.columns(2)
-        col1.metric("🚨 Falhas em Desligamentos", len(df_falhas_desl))
-        col2.metric("🚨 Conflitos de Transferência (SoD)", len(df_falhas_transf))
+        # Resumo Executivo com 3 colunas agora!
+        col1, col2, col3 = st.columns(3)
+        col1.metric("🚨 Falhas de Desligamentos", len(df_falhas_desl))
+        col2.metric("🚨 Conflitos de Transferência", len(df_falhas_transf))
+        col3.metric("👻 Contas Fantasmas", len(df_falhas_fantasmas))
         
         st.divider()
         
         # GERADOR DO EXCEL MULTI-ABAS
         st.subheader("📥 Exportar Parecer de Auditoria")
-        st.markdown("Baixe o relatório consolidado em Excel contendo as abas detalhadas de cada risco.")
+        st.markdown("Baixe o relatório consolidado em Excel contendo as 3 abas de risco.")
         
-        # Cria o arquivo em memória
         buffer = io.BytesIO()
         with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            # Salva aba 1
+            # Aba 1
             colunas_desl = ['Matrícula', 'Nome', 'Cargo', 'Classificação de Risco', 'Data Desligamento', 'Data de Bloqueio', 'Data de Último Login']
             df_falhas_desl[colunas_desl].to_excel(writer, sheet_name='Risco_Desligamentos', index=False)
             
-            # Salva aba 2
+            # Aba 2
             colunas_transf = ['Matrícula', 'Nome', 'Cargo Destino', 'Área Origem', 'Área Destino', 'Módulo', 'Classificação de Risco']
             df_falhas_transf[colunas_transf].to_excel(writer, sheet_name='Risco_Transferencias', index=False)
             
-        # Botão de Download Mágico do Streamlit
+            # Aba 3 (Nova)
+            colunas_fantasma = ['ID', 'Módulo', 'Data de Último Login', 'Status', 'Classificação de Risco']
+            df_falhas_fantasmas[colunas_fantasma].to_excel(writer, sheet_name='Risco_Fantasmas', index=False)
+            
         st.download_button(
             label="📊 Baixar Relatório Master (Excel)",
             data=buffer.getvalue(),
