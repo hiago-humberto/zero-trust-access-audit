@@ -48,7 +48,7 @@ In-Memory Buffers (BytesIO): Geração dinâmica de relatórios Excel multi-abas
 ##🚀 Como Executar o Projeto
 Opção 1: Visualização em Nuvem (Recomendado)
 Acesse a aplicação operando em tempo real através do Streamlit Community Cloud:
-👉 [INSERIR SEU LINK DO STREAMLIT AQUI]
+👉 [https://zero-trust-access-audit.streamlit.app/]
 
 Opção 2: Execução Local
 Para rodar a esteira de dados na sua máquina:
@@ -56,9 +56,9 @@ Para rodar a esteira de dados na sua máquina:
 Clone o repositório:
 ```bash
 git clone [https://github.com/SEU_USUARIO/zero-trust-access-audit.git](https://github.com/SEU_USUARIO/zero-trust-access-audit.git)
+```
 
-
-2. Crie e ative o ambiente virtual:
+Crie e ative o ambiente virtual:
 ```bash
    python -m venv .venv
    source .venv/Scripts/activate  # No Windows
