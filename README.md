@@ -59,6 +59,7 @@ git clone [https://github.com/SEU_USUARIO/zero-trust-access-audit.git](https://g
 ```
 
 Crie e ative o ambiente virtual:
+
 ```bash
    python -m venv .venv
    source .venv/Scripts/activate  # No Windows
@@ -67,11 +68,13 @@ Instale as dependências:
 
 ```bash
 pip install -r requirements.txt
-Inicie o Servidor de Auditoria:
 ```
+
+Inicie o Servidor de Auditoria:
 
 ```Bash
 streamlit run app.py
 ```
+
 📊 Relatório Master Consolidado
 A ferramenta conta com um gerador automático de relatórios. Na opção Auditoria Completa, o usuário pode realizar o download de um Parecer de Auditoria em Excel, contendo abas separadas e higienizadas para cada matriz de risco (Desligamentos, Transferências e Fantasmas), entregando o valor de negócio pronto para a tomada de decisão da diretoria
