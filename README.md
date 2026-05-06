@@ -45,9 +45,9 @@ Streamlit: Construção de painéis gerenciais interativos e renderização cond
 
 In-Memory Buffers (BytesIO): Geração dinâmica de relatórios Excel multi-abas sem necessidade de gravação no disco do servidor.
 ```
+---
 
-
-##🚀 Como Executar o Projeto
+## 🚀 Como Executar o Projeto   
 Opção 1: Visualização em Nuvem (Recomendado)
 Acesse a aplicação operando em tempo real através do Streamlit Community Cloud:
 ```bash
@@ -81,6 +81,6 @@ Inicie o Servidor de Auditoria:
 ```Bash
 streamlit run app.py
 ```
-
+---
 📊 Relatório Master Consolidado
 A ferramenta conta com um gerador automático de relatórios. Na opção Auditoria Completa, o usuário pode realizar o download de um Parecer de Auditoria em Excel, contendo abas separadas e higienizadas para cada matriz de risco (Desligamentos, Transferências e Fantasmas), entregando o valor de negócio pronto para a tomada de decisão da diretoria
