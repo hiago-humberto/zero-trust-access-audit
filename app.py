@@ -95,8 +95,8 @@ elif modo_auditoria == "3. Auditoria Completa (Consolidada)":
             df_falhas_fantasmas = rodar_auditoria_fantasmas(arquivo_ativos, arquivo_desligados, arquivo_usuarios)
             
             # Filtra apenas as falhas dos dois primeiros (o de fantasmas já traz só as falhas)
-            df_falhas_desl = df_resultado_desligados[df_resultado_desligados['Classificação de Risco'] != '🟢 OK: Controle Efetivo']
-            df_falhas_transf = df_resultado_transferidos[df_resultado_transferidos['Classificação de Risco'] != '🟢 OK: Controle Efetivo']
+            df_falhas_desl = df_resultado_desligados[df_resultado_desligados['Classificação de Risco'] != '🟢 OK']
+df_falhas_transf = df_resultado_transferidos[df_resultado_transferidos['Classificação de Risco'] != '🟢 OK']
             
             tempo_execucao = time.time() - inicio
 
