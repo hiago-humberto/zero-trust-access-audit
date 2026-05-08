@@ -2,7 +2,7 @@ import streamlit as st
 import time
 import pandas as pd
 import io
-from pipeline.orchestrator import rodar_auditoria, rodar_auditoria_transferencias, rodar_auditoria_fantasmas
+import plotly.express as px
 
 st.set_page_config(page_title="Zero Trust Audit Hub", page_icon="🛡️", layout="wide")
 
@@ -109,7 +109,31 @@ elif modo_auditoria == "3. Auditoria Completa (Consolidada)":
         col3.metric("👻 Contas Fantasmas", len(df_falhas_fantasmas))
         
         st.divider()
+        st.subheader("📊 Mapa de Calor de Riscos por Área")
         
+        # Unificando falhas para o gráfico
+        df_todas_falhas = pd.concat([
+            df_falhas_desl[['Area_Risco', 'Classificação de Risco']],
+            df_falhas_transf[['Area_Risco', 'Classificação de Risco']],
+            df_falhas_fantasmas[['Area_Risco', 'Classificação de Risco']]
+        ])
+        
+        if not df_todas_falhas.empty:
+            # Agrupando dados para o gráfico
+            chart_data = df_todas_falhas.groupby(['Area_Risco', 'Classificação de Risco']).size().reset_index(name='Quantidade')
+            
+            fig = px.bar(chart_data, x='Area_Risco', y='Quantidade', color='Classificação de Risco',
+                         title="Concentração de Riscos por Departamento",
+                         labels={'Area_Risco': 'Departamento', 'Quantidade': 'Nº de Incidentes'},
+                         barmode='stack', color_discrete_sequence=["#D32F2F", "#F57C00"])
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+            # INSIGHT PARA O LÍDER ( Storytelling Genial)
+            area_perigosa = chart_data.groupby('Area_Risco')['Quantidade'].sum().idxmax()
+            st.warning(f"⚠️ **Insight para Liderança:** O departamento de **{area_perigosa}** apresenta o maior volume de inconformidades. Recomenda-se revisão imediata dos processos de aprovação desta área.")
+        else:
+            st.success("Nenhum risco detectado nas áreas analisadas.")
         # GERADOR DO EXCEL MULTI-ABAS
         st.subheader("📥 Exportar Parecer de Auditoria")
         st.markdown("Baixe o relatório consolidado em Excel contendo as 3 abas de risco.")
