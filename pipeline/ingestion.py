@@ -6,7 +6,7 @@ def ler_arquivo_seguro(arquivo):
         # Tenta ler com UTF-8 (padrão do nosso gerador Python)
         df = pd.read_csv(arquivo, sep='\t', encoding='utf-8')
     except Exception:
-        # Se der erro, rebobina a fita e tenta Latin-1 (padrão da Deloitte/RH)
+        # Se der erro, rebobina a fita e tenta Latin-1 (padrão de empresa de exemplo)
         arquivo.seek(0)
         df = pd.read_csv(arquivo, sep='\t', encoding='latin-1')
     

@@ -4,7 +4,6 @@ import pandas as pd
 import io
 import plotly.express as px
 
-# IMPORTAÇÃO CORRIGIDA: Agora todas as funções vêm do maestro no topo do arquivo
 from pipeline.orchestrator import rodar_auditoria, rodar_auditoria_transferencias, rodar_auditoria_fantasmas
 
 st.set_page_config(page_title="Zero Trust Audit Hub", page_icon="🛡️", layout="wide")
@@ -13,7 +12,7 @@ st.markdown("<h1 style='text-align: center; color: #0D47A1;'>🛡️ Zero Trust 
 st.markdown("<p style='text-align: center; font-size: 1.2em; color: #555;'>Sistema Automatizado de Controles Internos e Segregação de Funções (SoD)</p>", unsafe_allow_html=True)
 st.divider()
 
-# O SEGREDO DO DESIGN: Menu de Navegação Lateral
+#  Menu de Navegação Lateral
 modo_auditoria = st.sidebar.radio(
     "📌 Selecione a Política de Auditoria:",
     ("1. Revogação de Acessos (Desligados)", "2. Revisão de Acessos (Transferidos)", "3. Auditoria Completa (Consolidada)")

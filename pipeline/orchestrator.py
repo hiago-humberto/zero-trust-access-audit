@@ -11,7 +11,7 @@ def rodar_auditoria_transferencias(arquivo_transferidos, arquivo_usuarios):
     return aplicar_regras_transferencias(df_transferidos, df_usuarios)
 
 def rodar_auditoria_fantasmas(arquivo_ativos, arquivo_desligados, arquivo_usuarios):
-    # Usando a nossa nova leitura blindada para os fantasmas
+    #  leitura blindada para os fantasmas opção 3
     df_ativos = ler_arquivo_seguro(arquivo_ativos)
     df_desligados = ler_arquivo_seguro(arquivo_desligados)
     df_usuarios = ler_arquivo_seguro(arquivo_usuarios)
