@@ -1,4 +1,5 @@
 # 🛡️ Zero Trust Access Audit Hub
+<img width="1202" height="837" alt="12" src="https://github.com/user-attachments/assets/e168f861-f97e-4c52-a4fa-8dec63653160" />
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B.svg)
