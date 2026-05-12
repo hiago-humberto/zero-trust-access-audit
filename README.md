@@ -45,16 +45,16 @@ Pandas & NumPy: Processamento vetorizado massivo, eliminando loops ineficientes 
 Streamlit: Construção de painéis gerenciais interativos e renderização condicional.
 
 In-Memory Buffers (BytesIO): Geração dinâmica de relatórios Excel multi-abas sem necessidade de gravação no disco do servidor.
-```
+
 ---
 
 ## 🚀 Como Executar o Projeto   
 Opção 1: Visualização em Nuvem (Recomendado)
 Acesse a aplicação operando em tempo real através do Streamlit Community Cloud:
-```bash
- (https://zero-trust-access-audit.streamlit.app/)
-```
-```
+
+ https://zero-trust-access-audit.streamlit.app/
+
+
 ```
 
 Opção 2: Execução Local
@@ -62,7 +62,7 @@ Para rodar a esteira de dados na sua máquina:
 
 Clone o repositório:
 ```bash
-git clone [https://github.com/hiago-humberto/zero-trust-access-audit.git](https://github.com/hiago-humberto/zero-trust-access-audit.git)
+git clone [https://github.com/hiago-humberto/zero-trust-access-audit.git]https://github.com/hiago-humberto/zero-trust-access-audit.git
 ```
 
 Crie e ative o ambiente virtual:
