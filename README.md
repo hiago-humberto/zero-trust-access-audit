@@ -52,7 +52,7 @@ In-Memory Buffers (BytesIO): Geração dinâmica de relatórios Excel multi-abas
 Opção 1: Visualização em Nuvem (Recomendado)
 Acesse a aplicação operando em tempo real através do Streamlit Community Cloud:
 ```bash
- [https://zero-trust-access-audit.streamlit.app/]
+ https://zero-trust-access-audit.streamlit.app/
 ```
 ```
 ```
