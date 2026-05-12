@@ -1,10 +1,20 @@
 import pandas as pd
 import streamlit as st
 
-@st.cache_data # Faz cache na memória para a tela não recarregar do zero toda hora
-def carregar_dados(arquivo_desligados, arquivo_usuarios):
-    # O Streamlit entrega o upload como um arquivo, o Pandas lê direto!
-    df_desligados = pd.read_csv(arquivo_desligados, sep='\t', encoding='latin-1')
-    df_usuarios = pd.read_csv(arquivo_usuarios, sep='\t', encoding='latin-1')
+def ler_arquivo_seguro(arquivo):
+    try:
+        # Tenta ler com UTF-8 (padrão do nosso gerador Python)
+        df = pd.read_csv(arquivo, sep='\t', encoding='utf-8')
+    except Exception:
+        # Se der erro, rebobina a fita e tenta Latin-1 (padrão da Deloitte/RH)
+        arquivo.seek(0)
+        df = pd.read_csv(arquivo, sep='\t', encoding='latin-1')
     
+    # Limpeza ninja: tira espaços invisíveis perdidos nos cabeçalhos
+    df.columns = df.columns.str.strip()
+    return df
+
+def carregar_dados(arquivo_desligados, arquivo_usuarios):
+    df_desligados = ler_arquivo_seguro(arquivo_desligados)
+    df_usuarios = ler_arquivo_seguro(arquivo_usuarios)
     return df_desligados, df_usuarios

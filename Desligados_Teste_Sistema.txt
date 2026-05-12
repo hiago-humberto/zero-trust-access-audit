@@ -1,0 +1,6 @@
+Matrícula	Nome	Cargo	Área	Data Desligamento
+2001	Marcos Gomes	Analista	TI	01/10/2023
+2002	Luciana Faria	Assistente	RH	15/10/2023
+2003	Paulo Castro	Gerente	Financeiro	20/10/2023
+2004	Beatriz Nunes	Estagiário	Vendas	05/11/2023
+2005	Ricardo Dias	Diretor	Operações	10/11/2023

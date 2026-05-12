@@ -1,0 +1,11 @@
+Matrícula	Nome	Cargo	Área	Data de Admissão
+1001	Carlos Silva	Gerente	Vendas	10/01/2015
+1002	Maria Souza	Analista	RH	15/03/2018
+1003	João Perez	Diretor	Operações	20/05/2010
+1004	Ana Costa	Coordenador	TI	11/11/2019
+1005	Lucas Almeida	Estagiário	Marketing	01/02/2023
+1006	Fernanda Lima	Analista	Financeiro	10/04/2020
+1007	Pedro Rocha	Assistente	Contábil	15/06/2021
+1008	Juliana Mendes	Gerente	Tributário	20/08/2016
+1009	Roberto Alves	Diretor	TI	05/09/2012
+1010	Camila Ribeiro	Coordenador	Vendas	12/12/2018

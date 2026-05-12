@@ -1,0 +1,6 @@
+Matrícula	Nome	Cargo Origem	Área Origem	Data Transferência	Cargo Destino	Área Destino
+3001	Sandra Lopes	Analista	Tributário	01/09/2023	Analista	Financeiro
+3002	Diego Martins	Assistente	Vendas	15/09/2023	Assistente	Marketing
+3003	Tatiana Silva	Gerente	Operações	20/09/2023	Gerente	TI
+3004	Vitor Hugo	Coordenador	Contábil	05/10/2023	Coordenador	Tributário
+3005	Aline Barros	Estagiário	RH	10/10/2023	Assistente	RH
